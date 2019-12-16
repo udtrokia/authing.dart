@@ -1,0 +1,14 @@
+name: authing
+version: 0.0.1
+description: >-
+  auth for everything.
+author: clearloop <udtrokia@163.com>
+homepage: https://github.com/clearloop/authing-dart-sdk
+documentation: https://example-pet-store.com/newtify/docs
+environment:
+  sdk: '>=2.2.0 <3.0.0'
+dependencies:
+  oauth2: ^1.5.0
+  encrypt: ^3.2.0
+  graphql: ^2.0.0
+dev_dependencies:
