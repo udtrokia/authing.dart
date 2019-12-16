@@ -8,6 +8,7 @@ documentation: https://example-pet-store.com/newtify/docs
 environment:
   sdk: '>=2.2.0 <3.0.0'
 dependencies:
+  pem: ^1.0.0
   oauth2: ^1.5.0
   encrypt: ^3.2.0
   graphql: ^2.0.0

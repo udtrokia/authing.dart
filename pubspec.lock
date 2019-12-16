@@ -120,6 +120,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.9.0"
+  pem:
+    dependency: "direct main"
+    description:
+      name: pem
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.2.1"
   pointycastle:
     dependency: transitive
     description:
