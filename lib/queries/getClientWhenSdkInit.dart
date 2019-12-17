@@ -1,4 +1,4 @@
-const query = r'''
+const getClientWhenSdkInitQuery = r'''
 query getClientWhenSdkInit(
     $secret: String
     $clientId: String
@@ -57,4 +57,4 @@ query getClientWhenSdkInit(
         accessToken
     }
 }    
-'''
+''';

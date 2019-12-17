@@ -1,4 +1,8 @@
-# authing-dart-sdk
+[Style Guide](https://dart.dev/guides/language/effective-dart)
+
+---
+
+# authing.dart
 
 ## What is Authing
 
