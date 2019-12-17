@@ -3,21 +3,13 @@ import 'package:graphql/client.dart';
 
 /// As [opts] in TokenManager.
 class TmOptionsHost {
-  final String users;
-  final String oauth;
-  const TmOptionsHost({
-      this.users = 'https://users.authing.cn/graphql',
-      this.oauth = 'https://oauth.authing.cn/graphql',
-  });
+  final String users = 'https://users.authing.cn/graphql';
+  final String oauth = 'https://oauth.authing.cn/graphql';
 }
 
 class TmOptionsPreFlightUrl {
-  final String users;
-  final String oauth;
-  const TmOptionsPreFlightUrl({
-      this.users = 'https://users.authing.cn/system/status',
-      this.oauth = 'https://oauth.authing.cn/system/status',
-  });
+  final String users = 'https://users.authing.cn/system/status';
+  final String oauth = 'https://oauth.authing.cn/graphql';
 }
 
 class TmOptions {
@@ -33,19 +25,29 @@ class TmOptions {
   final TmOptionsHost host;
   final TmOptionsPreFlightUrl preflightUrl;
   
-  const TmOptions({
-      this.timeout =  10000,
-      this.useSelfWxapp =  false,
-      this.enableFetchPhone =  false,
-      this.preflight =  false,
-      this.cdnPreflight =  false,
-      this.host = const TmOptionsHost(),
-      this.preflightUrl = const TmOptionsPreFlightUrl(),
-      this.cdnPreflightUrl = 'https://usercontents.authing.cn',
-      this.accessToken =  '',
-      this.userPoolId =  '',
-      this.secret = '',
-  });
+  TmOptions({
+      int timeout,
+      bool useSelfWxapp,
+      bool enableFetchPhone,
+      bool preflight,
+      bool cdnPreflight,
+      String cdnPreflightUrl,
+      String accessToken,
+      String userPoolId,
+      String secret,
+      TmOptionsHost host,
+      TmOptionsPreFlightUrl preflightUrl,
+  }) : this.timeout = timeout ?? 10000,
+       this.useSelfWxapp = useSelfWxapp ?? false,
+       this.enableFetchPhone = enableFetchPhone ?? false,
+       this.preflight =  preflight ?? false,
+       this.cdnPreflight = cdnPreflight ?? false,
+       this.cdnPreflightUrl = cdnPreflightUrl ?? 'https://usercontents.authing.cn',
+       this.accessToken = accessToken ?? '',
+       this.userPoolId = userPoolId ?? '5df760579d0df45585a2b7b3',
+       this.secret = secret ?? 'dc1501dff92e6b36c67f51a6b6f4e17c',
+       this.host = host ?? TmOptionsHost(),
+       this.preflightUrl = preflightUrl ?? TmOptionsPreFlightUrl();
 }
 
 /// Manage token in GraphQL client.
@@ -55,27 +57,27 @@ enum TokenType {
 }
 
 class TokenManager {
-  final TmOptions opts;
+  TmOptions opts;
   GraphQLClient client;
   String oToken;
   String uToken;
   bool lock;
 
   TokenManager({
-      this.oToken = '',
-      this.uToken = '',
-      this.lock = false,
-      this.opts = const TmOptions(),
-      this.client,
-  });
-
-  static get base => TokenManager(
-    client: GraphQLClient(
-      cache: InMemoryCache(),
-      link: HttpLink(uri: TmOptionsHost().users),
-    )
-  );
-
+      TmOptions opts,
+      GraphQLClient client,
+      String oToken,
+      String uToken,
+      bool lock,
+  }) : this.oToken = '',
+       this.uToken = '',
+       this.lock = false,
+       this.opts = TmOptions(),
+       this.client = GraphQLClient(
+         cache: InMemoryCache(),
+         link: HttpLink(uri: TmOptionsHost().users),
+       );
+  
   /// TODO: Error handler
   refreshToken() async {
     const String doc = r'''
@@ -104,8 +106,9 @@ class TokenManager {
     if (res.hasErrors) {
       print(res.errors);
     };
-    
-    oToken = res.data;
+
+    /// [res.data]: {getClientWhenSdkInit: {accessToken: ...}}
+    oToken = res.data['getClientWhenSdkInit']['accessToken'];
   }
   
   Future<String> getToken(TokenType type) async {
@@ -122,7 +125,9 @@ class TokenManager {
 }
 
 
-void main() async {
-  TokenManager tm = TokenManager.base;
-  var res = await tm.getToken(TokenType.OwnerToken);
-}
+/// [Test]
+/// void main() async {
+///   TokenManager tm = TokenManager();
+///   var tk = await tm.getToken(TokenType.OwnerToken);
+///   print(tk);
+/// }
