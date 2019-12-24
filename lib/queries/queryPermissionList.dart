@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const queryPermissionListQuery = r'''
 query queryPermissionList {
   queryPermissionList {
     list {

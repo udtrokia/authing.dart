@@ -60,17 +60,20 @@ class Options {
       String userPoolId,
       Host host,
       PreFlightUrl preflightUrl,
-  }) : this.timeout = timeout ?? 10000,
+  }) : assert(secret != null),
+       assert(userPoolId != null),
+       this.secret = secret,
+       this.userPoolId = userPoolId,
+       this.timeout = timeout ?? 10000,
        this.useSelfWxapp = useSelfWxapp ?? false,
        this.enableFetchPhone = enableFetchPhone ?? false,
        this.preflight =  preflight ?? false,
        this.cdnPreflight = cdnPreflight ?? false,
        this.accessToken = accessToken ?? '',
        this.cdnPreflightUrl = cdnPreflightUrl ?? 'https://usercontents.authing.cn',
-       this.secret = secret ?? 'dc1501dff92e6b36c67f51a6b6f4e17c',
-       this.userPoolId = userPoolId ?? '5df760579d0df45585a2b7b3',
        this.host = host ?? Host(),
        this.preflightUrl = preflightUrl ?? PreFlightUrl();
+       
 }
 
 

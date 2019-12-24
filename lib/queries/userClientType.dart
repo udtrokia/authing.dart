@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const getUserClientTypeQuery = r'''
 query getUserClientType {
     userClientTypes {
         _id

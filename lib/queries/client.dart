@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const clientQuery = r'''
 query client($id: String!, $userId: String!) {
   client(id: $id, userId: $userId) {
     _id

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const userClientsQuery = r'''
 query getUserClients($userId: String!, $page: Int, $count: Int) {
   userClients(userId: $userId, page: $page, count: $count) {
     totalCount

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const isClientBelongToUserQuery = r'''
 query isClientBelongToUser(
     $userId: String
     $clientId: String

@@ -28,12 +28,20 @@ part 'queries/updateRole.dart';
 part 'queries/assignUserToRole.dart';
 part 'queries/removeUserFromGroup.dart';
 part 'queries/usersInGroup.dart';
+part 'queries/userClients.dart';
+part 'queries/client.dart';
+part 'queries/userClientType.dart';
+part 'queries/queryPermissionList.dart';
+part 'queries/isClientBelongToUser.dart';
+part 'queries/removeUserClients.dart';
 
 /// [Authing] methds
 class Authing {
+  Options opts;
   Client cli;
-  Authing({Client cli}) {
-    this.cli = cli ?? Client();
+  Authing(Options opts) {
+    this.opts = opts ?? Options();
+    this.cli = Client(opts: this.opts);
   }
 
   static String encrypt(String s) {
@@ -395,7 +403,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  /// ERROR
+  /// [ERROR]
   usersInGroup({
       String group,
       String page,
@@ -410,4 +418,89 @@ GKl64GDcIq3au+aqJQIDAQAB
         }
     ));
   }
+
+  /// User Pool
+  userClients({
+      String userId,
+      int count,
+      int page,
+      bool computeUsersCount
+  }) async {
+    return await cli.r(QueryOptions(
+        document: userClientsQuery,
+        variables: <String, dynamic> {
+          'userId': userId,
+          'page': page,
+          'count': count,
+          'computeUsersCount': computeUsersCount
+        }
+    ));
+  }
+
+  client({
+      String id,
+      String userId,
+      bool fromAdmin
+  }) async {
+    return await cli.r(QueryOptions(
+        document: clientQuery,
+        variables: <String, dynamic> {
+          'userId': userId,
+          'id': id,
+          'fromAdmin': fromAdmin
+        }
+    ));
+  }
+
+  userClientType() async {
+    return await cli.r(QueryOptions(
+        document: getUserClientTypeQuery,
+    ));
+  }
+
+  queryPermissionList() async {
+    return await cli.r(QueryOptions(
+        document: queryPermissionListQuery
+    ));
+  }
+
+  isClientBelongToUser({
+      String userId,
+      String clientId,
+      String pmdesc
+  }) async {
+    return await cli.r(QueryOptions(
+        document: isClientBelongToUserQuery,
+        variables: <String, dynamic> {
+          'userId': userId,
+          'clientId': clientId,
+          'permissionDescriptors': pmdesc
+        }
+    ));
+  }
+
+  // removeUserClients({
+  //     List<String> ids
+  // }) async {
+  //   return await cli.r(QueryOptions(
+  //       document: removeUserClientsQuery,
+  //       variables: <String, dynamic> {
+  //         'ids': ids
+  //       }
+  //   ));
+  // }
+
+  // updateUserClient({
+  //     String id,
+  //     String name,
+  //     String userId,
+  //     String desc,
+  //     String allowedOrigins,
+  //     String jwtExpired,
+  //     String registerDisabled,
+  //     String showWXMPQRCode,
+  //     bool useMiniLogin,
+  //     bool emailVerifiedDefault,
+  //     String frequentRegisterCheck
+  // }) async {}
 }

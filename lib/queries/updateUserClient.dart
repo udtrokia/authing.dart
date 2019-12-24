@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const updateUserClientQuery = r'''
 mutation updateUserClient(
   $_id: String!
   $name: String

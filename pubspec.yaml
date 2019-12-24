@@ -1,15 +1,15 @@
 name: authing
-version: 0.0.1
+version: 0.1.0
 description: >-
   auth for everything.
 author: clearloop <udtrokia@163.com>
-homepage: https://github.com/clearloop/authing-dart-sdk
-documentation: https://example-pet-store.com/newtify/docs
+homepage: https://github.com/clearloop/authing.dart
+documentation: https://authing.cn/graphiql/
 environment:
   sdk: '>=2.2.0 <3.0.0'
 dependencies:
-  pem: ^1.0.0
-  oauth2: ^1.5.0
+  # pem: ^1.0.0
+  # oauth2: ^1.5.0
   encrypt: ^3.2.0
   graphql: ^2.0.0
   pointycastle: ^1.0.2
