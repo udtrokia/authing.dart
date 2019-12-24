@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const assignUserToRoleQuery = r'''
 mutation assignUserToRole($client:String!, $user:String!, $group:String!){
   assignUserToRole(client:$client, user:$user, group:$group){
     totalCount

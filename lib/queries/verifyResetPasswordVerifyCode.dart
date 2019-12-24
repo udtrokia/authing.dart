@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const verifyResetPasswordVerifyCodeQuery = r'''
 mutation VerifyResetPasswordVerifyCode(
   $email: String!
   $client: String!

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const decodeJwtTokenQuery = r'''
 query decodeJwtToken($token: String!){
   decodeJwtToken(token: $token){
     data{

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const updateUserQuery = r'''
 mutation UpdateUser(
   $id: String!
   $email: String

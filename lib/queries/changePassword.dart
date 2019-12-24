@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const changePasswordQuery = r'''
 mutation ChangePassword(
   $email: String!
   $client: String!

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const loginQuery = r'''
 mutation login(
   $email: String
   $password: String

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const removeUserFromGroupQuery = r'''
 mutation removeUserFromGroup($client:String!, $user:String!, $group:String!){
   removeUserFromGroup(client:$client, user:$user, group:$group){
     _id

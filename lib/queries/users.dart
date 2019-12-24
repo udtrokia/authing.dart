@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const usersQuery = r'''
 query users($registerInClient: String, $page: Int, $count: Int, $populate: Boolean) {
     users(registerInClient: $registerInClient, page: $page, count: $count, populate: $populate) {
         totalCount

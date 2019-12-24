@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const checkLoginStatusQuery = r'''
 query checkLoginStatus($token: String!) {
     checkLoginStatus(token: $token) {
         message

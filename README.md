@@ -1,3 +1,9 @@
+## Issues
+
++ [ ] usersInGroup 500
+
+---
+
 [Style Guide](https://dart.dev/guides/language/effective-dart)
 
 ---
@@ -14,6 +20,7 @@ Make sure you have a working dart environment. To install `authing-dart-sdk`, si
 #### 1. Depend on it
 
 Add thiss to your package's `pubspec.yaml` file:
+
 
 ```shell
 dependencies:

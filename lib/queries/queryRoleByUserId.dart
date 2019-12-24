@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const queryRoleByUserIdQuery = r'''
 query QueryRoleByUserId($user:String!,$client:String!){
   queryRoleByUserId(client:$client,user:$user){
     totalCount
