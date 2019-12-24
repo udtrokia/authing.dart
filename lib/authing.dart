@@ -49,7 +49,6 @@ part 'queries/query_invitation_state.dart';
 part 'queries/query_mfa.dart';
 part 'queries/remove_from_invitation.dart';
 part 'queries/send_webhook_test.dart';
-part 'queries/set_invitation_state.dart';
 
 /// [Authing] methds
 class Authing {
@@ -57,7 +56,7 @@ class Authing {
   Client cli;
   Authing(@required Options opts) {
     this.opts = opts;
-    this.cli = Client(opts);
+    this.cli = Client(opts: opts);
   }
 
   static String encrypt(String s) {

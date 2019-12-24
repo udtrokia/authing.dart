@@ -1,7 +1,6 @@
 part of authing;
-// import 'package:authing/options.dart';
 
-/// [TokenManager]: A structure to deal with developer/user conditions.
+/// A structure to deal with developer/user conditions.
 /// 1. ownerToken: Developers' token.
 /// 2. userToken: Developers' users' token.
 class TokenManager {
@@ -24,7 +23,7 @@ class TokenManager {
 }
 
 
-/// [Options]: Authing sdk Options.
+/// Authing sdk Options.
 class Host {
   final String users = 'https://users.authing.cn/graphql';
   final String oauth = 'https://oauth.authing.cn/graphql';
@@ -49,18 +48,19 @@ class Options {
   final PreFlightUrl preflightUrl;
   
   Options({
-      @required String secret,
-      @required String userPoolId,
-      int timeout,
-      bool useSelfWxapp,
-      bool enableFetchPhone,
-      bool preflight,
-      bool cdnPreflight,
-      String accessToken,
-      String cdnPreflightUrl,
+      @required this.secret,
+      @required this.userPoolId,
+      this.timeout = 1000,
+      this.useSelfWxapp = false,
+      this.enableFetchPhone = false,
+      this.preflight = false,
+      this.cdnPreflight = false,
+      this.accessToken = '',
+      this.cdnPreflightUrl = '',
       Host host,
       PreFlightUrl preflightUrl,
-  });   
+  }) : this.host = Host(),
+       this.preflightUrl = PreFlightUrl();
 }
 
 
@@ -70,8 +70,8 @@ class Client {
   TokenManager tm;
   GraphQLClient _client;
 
-  Client({ Options opts, TokenManager tm }) {
-    this.opts = opts ?? Options();
+  Client({ @required Options opts, TokenManager tm }) {
+    this.opts = opts;
     this.tm = tm ?? TokenManager();
     
     HttpLink _httpLink = HttpLink(uri: this.opts.host.users);
@@ -115,7 +115,7 @@ class Client {
       }
     );
 
-    /// [res.data]: {getClientWhenSdkInit: {accessToken: ...}}
+    /// res.data: {getClientWhenSdkInit: {accessToken: ...}}
     var res = await client.query(options);
     if (res.hasErrors) print(res.errors);
     tm.token = res.data['getClientWhenSdkInit']['accessToken'];
