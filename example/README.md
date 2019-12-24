@@ -49,7 +49,7 @@ main() async {
 	var res = await authing.register(
 		username: 'David Bowie',
 		email: 'bowie@mars.uni',
-		password: 'hallo-spaceboy'
+		passowrd: 'hallo-spaceboy'
 	);
 	
 	if (res.hasErrors) print(res.errors);

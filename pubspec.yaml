@@ -1,7 +1,7 @@
 name: authing
 version: 0.1.0
 description: >-
-  auth for everything.
+  Authing dart sdk for flutter and dart Apps, you can gently auth to your App with Authing.
 author: clearloop <udtrokia@163.com>
 homepage: https://github.com/clearloop/authing.dart
 documentation: https://authing.cn/graphiql/
@@ -10,6 +10,7 @@ environment:
 dependencies:
   # pem: ^1.0.0
   # oauth2: ^1.5.0
+  meta: ^1.1.8
   encrypt: ^3.2.0
   graphql: ^2.0.0
   pointycastle: ^1.0.2

@@ -2,6 +2,7 @@ library authing;
 
 import 'dart:io';
 import 'dart:convert';
+import 'package:meta/meta.dart';
 import 'package:graphql/client.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
@@ -9,31 +10,46 @@ import 'package:pointycastle/asymmetric/api.dart';
 part 'client.dart';
 part 'queries/register.dart';
 part 'queries/login.dart';
-part 'queries/decodeJwtToken.dart';
-part 'queries/refreshToken.dart';
+part 'queries/decode_jwt_token.dart';
+part 'queries/refresh_token.dart';
 part 'queries/user.dart';
 part 'queries/users.dart';
-part 'queries/checkLoginStatus.dart';
-part 'queries/removeUsers.dart';
-part 'queries/updateUser.dart';
-part 'queries/sendResetPasswordEmail.dart';
-part 'queries/verifyResetPasswordVerifyCode.dart';
-part 'queries/sendVerifyEmail.dart';
-part 'queries/changePassword.dart';
-part 'queries/unbindEmail.dart';
-part 'queries/clientRoles.dart';
-part 'queries/queryRoleByUserId.dart';
-part 'queries/createRole.dart';
-part 'queries/updateRole.dart';
-part 'queries/assignUserToRole.dart';
-part 'queries/removeUserFromGroup.dart';
-part 'queries/usersInGroup.dart';
-part 'queries/userClients.dart';
+part 'queries/check_login_status.dart';
+part 'queries/remove_users.dart';
+part 'queries/update_user.dart';
+part 'queries/send_reset_password_email.dart';
+part 'queries/verify_reset_password_verify_code.dart';
+part 'queries/send_verify_email.dart';
+part 'queries/change_password.dart';
+part 'queries/unbind_email.dart';
+part 'queries/client_roles.dart';
+part 'queries/query_role_by_user_id.dart';
+part 'queries/create_role.dart';
+part 'queries/update_role.dart';
+part 'queries/assign_user_to_role.dart';
+part 'queries/remove_user_from_group.dart';
+part 'queries/users_in_group.dart';
+part 'queries/user_clients.dart';
 part 'queries/client.dart';
-part 'queries/userClientType.dart';
-part 'queries/queryPermissionList.dart';
-part 'queries/isClientBelongToUser.dart';
-part 'queries/removeUserClients.dart';
+part 'queries/user_client_type.dart';
+part 'queries/query_permission_list.dart';
+part 'queries/is_client_belong_to_user.dart';
+part 'queries/remove_user_clients.dart';
+part 'queries/update_user_client.dart';
+part 'queries/add_client_webhook.dart';
+part 'queries/add_to_invitation.dart';
+part 'queries/delete_client_webhook.dart';
+part 'queries/get_all_webhooks.dart';
+part 'queries/get_client_when_sdk_init.dart';
+part 'queries/get_webhook_log_detail.dart';
+part 'queries/get_webhook_logs.dart';
+part 'queries/get_webhook_setting_options.dart';
+part 'queries/query_invitation.dart';
+part 'queries/query_invitation_state.dart';
+part 'queries/query_mfa.dart';
+part 'queries/remove_from_invitation.dart';
+part 'queries/send_webhook_test.dart';
+part 'queries/set_invitation_state.dart';
 
 /// [Authing] methds
 class Authing {
@@ -41,7 +57,7 @@ class Authing {
   Client cli;
   Authing(Options opts) {
     this.opts = opts ?? Options();
-    this.cli = Client(opts: this.opts);
+    this.cli = Client(opts: opts ?? Options());
   }
 
   static String encrypt(String s) {
@@ -58,7 +74,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   /// User Verify
-  register({
+  Future<QueryResult> register({
       String username,
       String email,
       String password,
@@ -85,7 +101,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  login({
+  Future<QueryResult> login({
       String username,
       String email,
       String password,
@@ -110,7 +126,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  decodeJwtToken({
+  Future<QueryResult> decodeJwtToken({
       String token,
       String email,
       String id,
@@ -129,7 +145,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  refreshToken({
+  Future<QueryResult> refreshToken({
       String client,
       String user
   }) async {
@@ -143,7 +159,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   /// User Manager
-  user({
+  Future<QueryResult> user({
       String registerInClient,
       String id,
       String token,
@@ -164,7 +180,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  users({
+  Future<QueryResult> users({
       String registerInClient,
       int page,
       int count,
@@ -181,7 +197,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  checkLoginStatus({
+  Future<QueryResult> checkLoginStatus({
       String token
   }) async {
     return await cli.r(QueryOptions(
@@ -192,7 +208,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  removeUsers({
+  Future<QueryResult> removeUsers({
       List<String> ids,
       String operator,
       String registerInClient
@@ -207,7 +223,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  updateUser({
+  Future<QueryResult> updateUser({
       String id,
       String email,
       String username,
@@ -238,7 +254,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  sendResetPasswordEmail({
+  Future<QueryResult> sendResetPasswordEmail({
       String email,
       String client,
   }) async {
@@ -251,7 +267,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  verifyResetPasswordVerifyCode({
+  Future<QueryResult> verifyResetPasswordVerifyCode({
       String email,
       String client,
       String verifyCode,
@@ -266,7 +282,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  sendVerifyEmail({
+  Future<QueryResult> sendVerifyEmail({
       String email,
       String client,
       String token
@@ -281,7 +297,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  changePassword({
+  Future<QueryResult> changePassword({
       String email,
       String client,
       String password,
@@ -298,7 +314,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  unbindEmail({
+  Future<QueryResult> unbindEmail({
       String user,
       String client
   }) async {
@@ -311,7 +327,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  clientRoles({
+  Future<QueryResult> clientRoles({
       String client,
       int count,
       int page
@@ -326,7 +342,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  queryRoleByUserId({
+  Future<QueryResult> queryRoleByUserId({
       String user,
       String client
   }) async {
@@ -339,7 +355,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  createRole({
+  Future<QueryResult> createRole({
       String name,
       String client,
       String desc
@@ -354,7 +370,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  updateRole({
+  Future<QueryResult> updateRole({
       String id,
       String client,
       String name,
@@ -373,7 +389,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  assignUserToRole({
+  Future<QueryResult> assignUserToRole({
       String user,
       String client,
       String group
@@ -388,7 +404,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  removeUserFromGroup({
+  Future<QueryResult> removeUserFromGroup({
       String client,
       String group,
       String user
@@ -404,7 +420,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   /// [ERROR]
-  usersInGroup({
+  Future<QueryResult> usersInGroup({
       String group,
       String page,
       String count,
@@ -420,7 +436,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   /// User Pool
-  userClients({
+  Future<QueryResult> userClients({
       String userId,
       int count,
       int page,
@@ -437,7 +453,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  client({
+  Future<QueryResult> client({
       String id,
       String userId,
       bool fromAdmin
@@ -452,19 +468,19 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  userClientType() async {
+  Future<QueryResult> userClientType() async {
     return await cli.r(QueryOptions(
         document: getUserClientTypeQuery,
     ));
   }
 
-  queryPermissionList() async {
+  Future<QueryResult> queryPermissionList() async {
     return await cli.r(QueryOptions(
         document: queryPermissionListQuery
     ));
   }
 
-  isClientBelongToUser({
+  Future<QueryResult> isClientBelongToUser({
       String userId,
       String clientId,
       String pmdesc

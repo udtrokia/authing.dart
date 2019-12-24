@@ -1,6 +1,6 @@
 part of authing;
 
-const userQuery = r'''
+final String userQuery = r'''
 query user(
   $id: String!
   $registerInClient: String!

@@ -1,0 +1,13 @@
+part of authing;
+
+final String queryMFAQuery = r'''
+query queryMFA($_id: String, $userId: String, $userPoolId: String) {
+	queryMFA(_id: $_id, userId: $userId, userPoolId: $userPoolId) {
+		_id
+		userId
+		userPoolId
+		enable
+		shareKey
+	}
+}
+''';

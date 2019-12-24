@@ -49,6 +49,8 @@ class Options {
   final PreFlightUrl preflightUrl;
   
   Options({
+      @required String secret,
+      @required String userPoolId,
       int timeout,
       bool useSelfWxapp,
       bool enableFetchPhone,
@@ -56,13 +58,9 @@ class Options {
       bool cdnPreflight,
       String accessToken,
       String cdnPreflightUrl,
-      String secret,
-      String userPoolId,
       Host host,
       PreFlightUrl preflightUrl,
-  }) : assert(secret != null),
-       assert(userPoolId != null),
-       this.secret = secret,
+  }) : this.secret = secret,
        this.userPoolId = userPoolId,
        this.timeout = timeout ?? 10000,
        this.useSelfWxapp = useSelfWxapp ?? false,
