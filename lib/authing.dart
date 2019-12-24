@@ -54,7 +54,8 @@ part 'queries/send_webhook_test.dart';
 class Authing {
   Options opts;
   Client cli;
-  Authing(@required Options opts) {
+  Authing(Options opts) {
+    assert(opts != null);
     this.opts = opts;
     this.cli = Client(opts: opts);
   }

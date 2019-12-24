@@ -74,13 +74,13 @@ class Client {
     this.opts = opts;
     this.tm = tm ?? TokenManager();
     
-    HttpLink _httpLink = HttpLink(uri: this.opts.host.users);
-    AuthLink _authLink = AuthLink(getToken: _getToken);
-    Link _link = _authLink.concat(_httpLink);
+    HttpLink httpLink = HttpLink(uri: this.opts.host.users);
+    AuthLink authLink = AuthLink(getToken: getToken);
+    Link link = authLink.concat(httpLink);
 
     this._client = GraphQLClient(
       cache: InMemoryCache(),
-      link: _link,
+      link: link,
     );
   }
 
@@ -88,7 +88,7 @@ class Client {
     return await _client.query(opts);
   }
   
-  Future<String> _getToken() async {
+  Future<String> getToken() async {
     /// [client]: Use default client without authorization.
     GraphQLClient client = GraphQLClient(
       cache: InMemoryCache(),
@@ -130,11 +130,11 @@ class Client {
 
       if (exp.isBefore(now)) {
         print('Token Expired: ${exp.toString()} < ${now.toString()}');
-        return await _getToken();
+        return await getToken();
       }
     } catch(e) {
       print('Error: $e');
-      return await _getToken();
+      return await getToken();
     }
         
     return tm.token;
@@ -146,7 +146,7 @@ class Client {
     stdout.write('ping......');
 
     try {
-      String _ = await _getToken();
+      String _ = await getToken();
       print('pong');
       return true;
     } catch(e) {
