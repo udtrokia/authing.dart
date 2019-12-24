@@ -55,9 +55,9 @@ part 'queries/set_invitation_state.dart';
 class Authing {
   Options opts;
   Client cli;
-  Authing(Options opts) {
-    this.opts = opts ?? Options();
-    this.cli = Client(opts: opts ?? Options());
+  Authing(@required Options opts) {
+    this.opts = opts;
+    this.cli = Client(opts);
   }
 
   static String encrypt(String s) {

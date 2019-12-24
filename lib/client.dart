@@ -60,18 +60,7 @@ class Options {
       String cdnPreflightUrl,
       Host host,
       PreFlightUrl preflightUrl,
-  }) : this.secret = secret,
-       this.userPoolId = userPoolId,
-       this.timeout = timeout ?? 10000,
-       this.useSelfWxapp = useSelfWxapp ?? false,
-       this.enableFetchPhone = enableFetchPhone ?? false,
-       this.preflight =  preflight ?? false,
-       this.cdnPreflight = cdnPreflight ?? false,
-       this.accessToken = accessToken ?? '',
-       this.cdnPreflightUrl = cdnPreflightUrl ?? 'https://usercontents.authing.cn',
-       this.host = host ?? Host(),
-       this.preflightUrl = preflightUrl ?? PreFlightUrl();
-       
+  });   
 }
 
 
