@@ -50,7 +50,7 @@ part 'queries/query_mfa.dart';
 part 'queries/remove_from_invitation.dart';
 part 'queries/send_webhook_test.dart';
 
-/// [Authing] methds
+/// The high-level wrapper
 class Authing {
   Options opts;
   Client cli;

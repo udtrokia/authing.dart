@@ -64,7 +64,7 @@ class Options {
 }
 
 
-/// [GraphQL Client]: Authing GraphQL Client with token management.
+/// Authing GraphQL Client with token management.
 class Client {
   Options opts;
   TokenManager tm;
