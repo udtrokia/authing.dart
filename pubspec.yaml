@@ -1,5 +1,5 @@
 name: authing
-version: 0.1.5
+version: 0.1.7
 description: >-
   Authing dart sdk for flutter and dart Apps, you can gently auth to your App with Authing.
 author: clearloop <udtrokia@163.com>
@@ -13,3 +13,4 @@ dependencies:
   graphql: ^2.0.0
   pointycastle: ^1.0.2
 dev_dependencies:
+  effective_dart: ^1.1.0

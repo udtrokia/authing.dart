@@ -22,8 +22,6 @@ class TokenManager {
   set token(String value) => dev? oToken = value: uToken = value;
 }
 
-
-/// Authing sdk Options.
 class Host {
   final String users = 'https://users.authing.cn/graphql';
   final String oauth = 'https://oauth.authing.cn/graphql';
@@ -34,6 +32,7 @@ class PreFlightUrl {
   final String oauth = 'https://oauth.authing.cn/graphql';
 }
 
+/// Authing sdk Options.
 class Options {
   final int timeout;
   final bool useSelfWxapp;
@@ -57,28 +56,27 @@ class Options {
       this.cdnPreflight = false,
       this.accessToken = '',
       this.cdnPreflightUrl = '',
-      Host host,
-      PreFlightUrl preflightUrl,
-  }) : this.host = Host(),
-       this.preflightUrl = PreFlightUrl();
+      String host,
+      String preflightUrl,
+  }) : host = Host(),
+       preflightUrl = PreFlightUrl();
 }
 
 
-/// Authing GraphQL Client with token management.
+/// Authing GraphQL Client with token manager.
 class Client {
   Options opts;
   TokenManager tm;
   GraphQLClient _client;
 
-  Client({ @required Options opts, TokenManager tm }) {
-    this.opts = opts;
+  Client({@required this.opts, TokenManager tm}) {
     this.tm = tm ?? TokenManager();
     
-    HttpLink httpLink = HttpLink(uri: this.opts.host.users);
-    AuthLink authLink = AuthLink(getToken: getToken);
-    Link link = authLink.concat(httpLink);
-
-    this._client = GraphQLClient(
+    var httpLink = HttpLink(uri: opts.host.users);
+    var authLink = AuthLink(getToken: getToken);
+    var link = authLink.concat(httpLink);
+    
+    _client = GraphQLClient(
       cache: InMemoryCache(),
       link: link,
     );
@@ -89,13 +87,13 @@ class Client {
   }
   
   Future<String> getToken() async {
-    /// [client]: Use default client without authorization.
-    GraphQLClient client = GraphQLClient(
+    /// Use default client without authorization.
+    var client = GraphQLClient(
       cache: InMemoryCache(),
       link: HttpLink(uri: opts.host.users),
     );
     
-    QueryOptions options = QueryOptions(
+    var options = QueryOptions(
       document: r'''
         query getClientWhenSdkInit(
           $secret: String
@@ -122,17 +120,19 @@ class Client {
 
     /// Test if token expired.
     try {
-      String payload = tm.token.split(".")[1];
-      Map info = jsonDecode(utf8.decode(base64.decode(base64.normalize(payload))));
+      var payload = tm.token.split('.')[1];
+      var info = jsonDecode(utf8.decode(base64.decode(base64.normalize(payload))));
 
-      DateTime exp = DateTime.fromMillisecondsSinceEpoch(info['exp'] * 1000);
-      DateTime now = DateTime.now();
+      var exp = DateTime.fromMillisecondsSinceEpoch(info['exp'] * 1000);
+      var now = DateTime.now();
 
       if (exp.isBefore(now)) {
         print('Token Expired: ${exp.toString()} < ${now.toString()}');
         return await getToken();
       }
-    } catch(e) {
+    }
+
+    on Exception catch(e) {
       print('Error: $e');
       return await getToken();
     }
@@ -146,10 +146,12 @@ class Client {
     stdout.write('ping......');
 
     try {
-      String _ = await getToken();
+      var _ = await getToken();
       print('pong');
       return true;
-    } catch(e) {
+    }
+
+    on Exception catch(e) {
       print('peng');
       print('Error: $e');
       return false;

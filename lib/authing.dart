@@ -1,54 +1,54 @@
 library authing;
 
-import 'dart:io';
 import 'dart:convert';
-import 'package:meta/meta.dart';
-import 'package:graphql/client.dart';
+import 'dart:io';
 import 'package:encrypt/encrypt.dart';
+import 'package:graphql/client.dart';
+import 'package:meta/meta.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 
 part 'client.dart';
-part 'queries/register.dart';
-part 'queries/login.dart';
-part 'queries/decode_jwt_token.dart';
-part 'queries/refresh_token.dart';
-part 'queries/user.dart';
-part 'queries/users.dart';
-part 'queries/check_login_status.dart';
-part 'queries/remove_users.dart';
-part 'queries/update_user.dart';
-part 'queries/send_reset_password_email.dart';
-part 'queries/verify_reset_password_verify_code.dart';
-part 'queries/send_verify_email.dart';
-part 'queries/change_password.dart';
-part 'queries/unbind_email.dart';
-part 'queries/client_roles.dart';
-part 'queries/query_role_by_user_id.dart';
-part 'queries/create_role.dart';
-part 'queries/update_role.dart';
-part 'queries/assign_user_to_role.dart';
-part 'queries/remove_user_from_group.dart';
-part 'queries/users_in_group.dart';
-part 'queries/user_clients.dart';
-part 'queries/client.dart';
-part 'queries/user_client_type.dart';
-part 'queries/query_permission_list.dart';
-part 'queries/is_client_belong_to_user.dart';
-part 'queries/remove_user_clients.dart';
-part 'queries/update_user_client.dart';
 part 'queries/add_client_webhook.dart';
 part 'queries/add_to_invitation.dart';
+part 'queries/assign_user_to_role.dart';
+part 'queries/change_password.dart';
+part 'queries/check_login_status.dart';
+part 'queries/client.dart';
+part 'queries/client_roles.dart';
+part 'queries/create_role.dart';
+part 'queries/decode_jwt_token.dart';
 part 'queries/delete_client_webhook.dart';
 part 'queries/get_all_webhooks.dart';
 part 'queries/get_client_when_sdk_init.dart';
 part 'queries/get_webhook_log_detail.dart';
 part 'queries/get_webhook_logs.dart';
 part 'queries/get_webhook_setting_options.dart';
+part 'queries/is_client_belong_to_user.dart';
+part 'queries/login.dart';
 part 'queries/query_invitation.dart';
 part 'queries/query_invitation_state.dart';
 part 'queries/query_mfa.dart';
+part 'queries/query_permission_list.dart';
+part 'queries/query_role_by_user_id.dart';
+part 'queries/refresh_token.dart';
+part 'queries/register.dart';
 part 'queries/remove_from_invitation.dart';
+part 'queries/remove_users.dart';
+part 'queries/remove_user_clients.dart';
+part 'queries/remove_user_from_group.dart';
+part 'queries/send_reset_password_email.dart';
+part 'queries/send_verify_email.dart';
 part 'queries/send_webhook_test.dart';
+part 'queries/unbind_email.dart';
+part 'queries/update_role.dart';
+part 'queries/update_user.dart';
+part 'queries/update_user_client.dart';
+part 'queries/users_in_group.dart';
+part 'queries/user.dart';
+part 'queries/users.dart';
+part 'queries/user_clients.dart';
+part 'queries/user_client_type.dart';
+part 'queries/verify_reset_password_verify_code.dart';
 
 /// The high-level wrapper
 class Authing {
@@ -56,8 +56,8 @@ class Authing {
   Client cli;
   Authing(Options opts) {
     assert(opts != null);
-    this.opts = opts;
-    this.cli = Client(opts: opts);
+    opts = opts;
+    cli = Client(opts: opts);
   }
 
   static String encrypt(String s) {
@@ -80,10 +80,10 @@ GKl64GDcIq3au+aqJQIDAQAB
       String password,
       String lastIP,
       bool forceLogin,
-      String registerInClient,
       String phone,
       String invitationCode,
-      String browser
+      String browser,
+      @required String registerInClient
   }) async {
     return await cli.r(QueryOptions(
         document: registerQuery,
@@ -93,7 +93,7 @@ GKl64GDcIq3au+aqJQIDAQAB
           'password': Authing.encrypt(password),
           'lastIP': lastIP,
           'forceLogin': forceLogin,
-          'registerInClient': registerInClient,
+          'registerInClient': cli.opts.userPoolId,
           'phone': phone,
           'invitationCode': invitationCode,
           'browser': browser

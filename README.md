@@ -1,12 +1,12 @@
 # Authing.dart
 [![Pub Package](https://img.shields.io/pub/v/authing.svg)](https://pub.dartlang.org/packages/authing)
+[![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
 
 <h1 align="center">
   <a href="https://authing.cn"><img width="550" src="https://cdn.authing.cn/authing-logo@2.png?a=1" alt="Authing" /></a>
 </h1>
 
 <h3 align="center">Authing —— 一个所有人可用的身份管理平台</h3>
-<br/>
 
 ## Authing 是什么？
 
