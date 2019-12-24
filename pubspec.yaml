@@ -12,4 +12,5 @@ dependencies:
   oauth2: ^1.5.0
   encrypt: ^3.2.0
   graphql: ^2.0.0
+  pointycastle: ^1.0.2
 dev_dependencies:

@@ -1,4 +1,6 @@
-const query = r'''
+part of authing;
+
+const registerQuery = r'''
 mutation register(
     $username: String
     $email: String
