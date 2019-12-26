@@ -55,8 +55,11 @@ main() async {
 		password: 'hallo-spaceboy'
 	);
 	
-	if (res.hasErrors) print(res.errors);
-	print(res.data);
+	if (res.hasErrors) {
+		print(res.errors);
+	} else {
+		print(res.data);
+	}
 }
 ```
 
