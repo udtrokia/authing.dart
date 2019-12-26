@@ -11,6 +11,7 @@ part 'client.dart';
 part 'queries/add_client_webhook.dart';
 part 'queries/add_to_invitation.dart';
 part 'queries/assign_user_to_role.dart';
+part 'queries/bind_other_oauth.dart';
 part 'queries/change_password.dart';
 part 'queries/check_login_status.dart';
 part 'queries/client.dart';
@@ -20,6 +21,7 @@ part 'queries/decode_jwt_token.dart';
 part 'queries/delete_client_webhook.dart';
 part 'queries/get_all_webhooks.dart';
 part 'queries/get_client_when_sdk_init.dart';
+part 'queries/get_users_by_role.dart';
 part 'queries/get_webhook_log_detail.dart';
 part 'queries/get_webhook_logs.dart';
 part 'queries/get_webhook_setting_options.dart';
@@ -39,7 +41,9 @@ part 'queries/remove_user_from_group.dart';
 part 'queries/send_reset_password_email.dart';
 part 'queries/send_verify_email.dart';
 part 'queries/send_webhook_test.dart';
+part 'queries/set_invitation_state.dart';
 part 'queries/unbind_email.dart';
+part 'queries/unbind_other_oauth.dart';
 part 'queries/update_role.dart';
 part 'queries/update_user.dart';
 part 'queries/update_user_client.dart';
@@ -419,9 +423,9 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  /// [ERROR]
-  Future<QueryResult> usersInGroup({
+  Future<QueryResult> getUsersByRole({
       String group,
+      String client,
       String page,
       String count,
   }) async {
@@ -429,6 +433,7 @@ GKl64GDcIq3au+aqJQIDAQAB
         document: usersInGroupQuery,
         variables: <String, dynamic> {
           'page': page,
+          'client': client,
           'count': count,
           'group': group
         }
@@ -495,8 +500,8 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  removeUserClients({
-      List<String> ids
+  Future<QueryResult> removeUserClients({
+      @required List<String> ids
   }) async {
     return await cli.r(QueryOptions(
         document: removeUserClientsQuery,
@@ -506,7 +511,7 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  updateUserClient({
+  Future<QueryResult> updateUserClient({
       String id,
       String name,
       String userId,
@@ -533,6 +538,137 @@ GKl64GDcIq3au+aqJQIDAQAB
           'useMiniLogin': useMiniLogin,
           'emailVerifiedDefault': emailVerifiedDefault,
           'frequentRegisterCheck': frequentRegisterCheck
+        }
+    ));
+  }
+
+  Future<QueryResult> bindOtherOAuth({
+      String user,
+      String client,
+      @required String type,
+      @required String unionid,
+      @required String userInfo
+  }) async {
+    return await cli.r(QueryOptions(
+        document: bindOtherOAuthQuery,
+        variables: <String, dynamic> {
+          'user': user,
+          'client': client,
+          'type': type,
+          'unionid': unionid,
+          'userInfo': userInfo
+        }
+    ));
+  }
+
+  Future<QueryResult> unbindOtherOAuth({
+      String user,
+      String client,
+      @required String type
+  }) async {
+    return await cli.r(QueryOptions(
+        document: unbindOtherOAuthQuery,
+        variables: <String, dynamic> {
+          'user': user,
+          'client': client,
+          'type': type,
+        }
+    ));
+  }
+
+  /// White List
+  Future<QueryResult> setInvitationState({
+      @required String client,
+      @required String enablePhone
+  }) async {
+    return await cli.r(QueryOptions(
+        document: setInvitationStateQuery,
+        variables: <String, dynamic> {
+          'client': client,
+          'enablePhone': enablePhone
+        }
+    ));
+  }
+
+  Future<QueryResult> queryInvitationState({
+      @required String client
+  }) async {
+    return await cli.r(QueryOptions(
+        document: getUserInvitationEnableQuery,
+        variables: <String, dynamic> {
+          'client': client,
+        }
+    ));
+  }
+
+  Future<QueryResult> addToInvitation({
+      @required String client,
+      @required String phone
+  }) async {
+    return await cli.r(QueryOptions(
+        document: addInvitationUserQuery,
+        variables: <String, dynamic> {
+          'client': client,
+          'phone': phone
+        }
+    ));
+  }
+
+  Future<QueryResult> removeFromInvitation({
+      @required String client,
+      @required String phone
+  }) async {
+    return await cli.r(QueryOptions(
+        document: removeInvitationUserQuery,
+        variables: <String, dynamic> {
+          'client': client,
+          'phone': phone
+        }
+    ));
+  }
+
+  Future<QueryResult> queryInvitation({
+      @required String client,
+  }) async {
+    return await cli.r(QueryOptions(
+        document: getUserInvitationListQuery,
+        variables: <String, dynamic> {
+          'client': client,
+        }
+    ));
+  }
+
+  /// MFA
+  Future<QueryResult> queryMFA({
+      String id,
+      String userId,
+      @required String userPoolId,
+  }) async {
+    return await cli.r(QueryOptions(
+        document: queryMFAQuery,
+        variables: <String, dynamic> {
+          '_id': id,
+          'userid': userId,
+          'userPoolId': userPoolId
+        }
+    ));
+  }
+
+  Future<QueryResult> changeMFA({
+      String id,
+      String userId,
+      String refreshKey,
+      @required bool enable,
+      @required String userPoolId,
+  }) async {
+    return await cli.r(QueryOptions(
+        document: queryMFAQuery,
+        variables: <String, dynamic> {
+          '_id': id,
+          'userid': userId,
+          'refreshKey': refreshKey,          
+          'enable': enable,
+          'userPoolId': userPoolId,
         }
     ));
   }

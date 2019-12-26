@@ -14,14 +14,8 @@ main() async {
 	Authing authing = Authing(opts);
 
   /// handle res
-	var res = await authing.updateUserClient(
-    // username: 'David Bowie',
-    // password: '1118',
-    // email: 'udtrokia@163.com',
-    // registerInClient: pool,
-    desc: 'hallo spaceboy',
-    userId: user,
-    id: pool,
+	var res = await authing.queryInvitationState(
+    client: pool,
 	);
 	
 	if (res.hasErrors){
