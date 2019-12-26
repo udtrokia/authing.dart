@@ -1,20 +1,32 @@
 import 'package:authing/authing.dart';
 
+final String pool = '5e0489a3b6cbc91087ac82ae';
+final String user = '5e048b98b6cbc957baac8c94';
+final String role = '5e048ad3b6cbc953a0ac88f7';
+
 main() async {
 	Options opts = Options(
-		userPoolId: '5df760579d0df45585a2b7b3',
-		secret: 'dc1501dff92e6b36c67f51a6b6f4e17c',
+		userPoolId: '5e0489a3b6cbc91087ac82ae',
+		secret: 'fd5ba7fa24036a33e9c85630c2e02b75',
 	);
 	
 	/// init authing client
 	Authing authing = Authing(opts);
 
   /// handle res
-	var res = await authing.register(
-		username: 'David Bowie',
-		email: 'bowie@mars.uni',
-		password: 'hallo-spaceboy',
+	var res = await authing.updateUserClient(
+    // username: 'David Bowie',
+    // password: '1118',
+    // email: 'udtrokia@163.com',
+    // registerInClient: pool,
+    desc: 'hallo spaceboy',
+    userId: user,
+    id: pool,
 	);
 	
-	res.hasErrors? print(res.errors): print(res.data);
+	if (res.hasErrors){
+    print(res.errors);
+  } else {
+    print(res.data);
+  }
 }

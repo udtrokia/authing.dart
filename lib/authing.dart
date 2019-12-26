@@ -495,28 +495,45 @@ GKl64GDcIq3au+aqJQIDAQAB
     ));
   }
 
-  // removeUserClients({
-  //     List<String> ids
-  // }) async {
-  //   return await cli.r(QueryOptions(
-  //       document: removeUserClientsQuery,
-  //       variables: <String, dynamic> {
-  //         'ids': ids
-  //       }
-  //   ));
-  // }
+  removeUserClients({
+      List<String> ids
+  }) async {
+    return await cli.r(QueryOptions(
+        document: removeUserClientsQuery,
+        variables: <String, dynamic> {
+          'ids': ids
+        }
+    ));
+  }
 
-  // updateUserClient({
-  //     String id,
-  //     String name,
-  //     String userId,
-  //     String desc,
-  //     String allowedOrigins,
-  //     String jwtExpired,
-  //     String registerDisabled,
-  //     String showWXMPQRCode,
-  //     bool useMiniLogin,
-  //     bool emailVerifiedDefault,
-  //     String frequentRegisterCheck
-  // }) async {}
+  updateUserClient({
+      String id,
+      String name,
+      String userId,
+      String desc,
+      String allowedOrigins,
+      String jwtExpired,
+      String registerDisabled,
+      String showWXMPQRCode,
+      bool useMiniLogin,
+      bool emailVerifiedDefault,
+      String frequentRegisterCheck
+  }) async {
+    return await cli.r(QueryOptions(
+        document: updateUserClientQuery,
+        variables: <String, dynamic> {
+          '_id': id,
+          'name': name,
+          'userId': userId,
+          'description': desc,
+          'allowedOrigins': allowedOrigins,
+          'jwtExpired': jwtExpired,
+          'registerDisabled': registerDisabled,
+          'showWXMPQRCode': showWXMPQRCode,
+          'useMiniLogin': useMiniLogin,
+          'emailVerifiedDefault': emailVerifiedDefault,
+          'frequentRegisterCheck': frequentRegisterCheck
+        }
+    ));
+  }
 }
