@@ -45,6 +45,7 @@ part 'queries/set_invitation_state.dart';
 part 'queries/unbind_email.dart';
 part 'queries/unbind_other_oauth.dart';
 part 'queries/update_role.dart';
+part 'queries/update_client_webhook.dart';
 part 'queries/update_user.dart';
 part 'queries/update_user_client.dart';
 part 'queries/users_in_group.dart';
@@ -110,10 +111,10 @@ GKl64GDcIq3au+aqJQIDAQAB
       String email,
       String password,
       String lastIP,
-      String registerInClient,
       String phone,
       String browser,
-      String verifyCode
+      String verifyCode,
+      @required String registerInClient,
   }) async {
     return await cli.r(QueryOptions(
         document: loginQuery,
@@ -131,27 +132,19 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> decodeJwtToken({
-      String token,
-      String email,
-      String id,
-      String clientId,
-      String unionid
+      @required String token,
   }) async {
     return await cli.r(QueryOptions(
         document: decodeJwtTokenQuery,
         variables: <String, dynamic>{
           'token': token,
-          'email': email,
-          'id': id,
-          'clientId': clientId,
-          'unionid': unionid
         }
     ));
   }
 
   Future<QueryResult> refreshToken({
-      String client,
-      String user
+      @required String client,
+      @required String user
   }) async {
     return await cli.r(QueryOptions(
         document: refreshTokenQuery,
@@ -164,8 +157,8 @@ GKl64GDcIq3au+aqJQIDAQAB
 
   /// User Manager
   Future<QueryResult> user({
-      String registerInClient,
-      String id,
+      @required String id,
+      @required String registerInClient,
       String token,
       bool auth,
       int userLoginHistoryPage,
@@ -185,7 +178,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> users({
-      String registerInClient,
+      @required String registerInClient,
       int page,
       int count,
       bool populate,
@@ -202,7 +195,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> checkLoginStatus({
-      String token
+      @required String token
   }) async {
     return await cli.r(QueryOptions(
         document: checkLoginStatusQuery,
@@ -213,9 +206,9 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> removeUsers({
-      List<String> ids,
+      @required List<String> ids,
+      @required String registerInClient
       String operator,
-      String registerInClient
   }) async {
     return await cli.r(QueryOptions(
         document: removeUsersQuery,
@@ -228,7 +221,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> updateUser({
-      String id,
+      @required String id,
       String email,
       String username,
       String photo,
@@ -259,8 +252,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> sendResetPasswordEmail({
-      String email,
-      String client,
+      @required String email,
+      @required String client,
   }) async {
     return await cli.r(QueryOptions(
         document: sendResetPasswordEmailQuery,
@@ -272,8 +265,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> verifyResetPasswordVerifyCode({
-      String email,
-      String client,
+      @required String email,
+      @required String client,
       String verifyCode,
   }) async {
     return await cli.r(QueryOptions(
@@ -287,25 +280,23 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> sendVerifyEmail({
-      String email,
-      String client,
-      String token
+      @required String email,
+      @required String client,
   }) async {
     return await cli.r(QueryOptions(
         document: sendVerifyEmailQuery,
         variables: <String, dynamic> {
           'email': email,
           'client': client,
-          'token': token
         }
     ));
   }
 
   Future<QueryResult> changePassword({
-      String email,
-      String client,
-      String password,
-      String verifyCode,
+      @required String email,
+      @required String client,
+      @required String password,
+      @required String verifyCode,
   }) async {
     return await cli.r(QueryOptions(
         document: changePasswordQuery,
@@ -319,8 +310,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> unbindEmail({
-      String user,
-      String client
+      @required String user,
+      @required String client
   }) async {
     return await cli.r(QueryOptions(
         document: unbindEmailQuery,
@@ -332,7 +323,7 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> clientRoles({
-      String client,
+      @required String client,
       int count,
       int page
   }) async {
@@ -347,8 +338,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> queryRoleByUserId({
-      String user,
-      String client
+      @required String user,
+      @required String client
   }) async {
     return await cli.r(QueryOptions(
         document: queryRoleByUserIdQuery,
@@ -360,8 +351,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> createRole({
-      String name,
-      String client,
+      @required String name,
+      @required String client,
       String desc
   }) async {
     return await cli.r(QueryOptions(
@@ -375,9 +366,9 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> updateRole({
-      String id,
-      String client,
-      String name,
+      @required String id,
+      @required String client,
+      @required String name,
       String desc,
       String pms
   }) async {
@@ -394,9 +385,9 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> assignUserToRole({
-      String user,
-      String client,
-      String group
+      @required String user,
+      @required String client,
+      @required String group
   }) async {
     return await cli.r(QueryOptions(
         document: assignUserToRoleQuery,
@@ -409,9 +400,9 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> removeUserFromGroup({
-      String client,
-      String group,
-      String user
+      @required String client,
+      @required String group,
+      @required String user
   }) async {
     return await cli.r(QueryOptions(
         document: removeUserFromGroupQuery,
@@ -442,10 +433,10 @@ GKl64GDcIq3au+aqJQIDAQAB
 
   /// User Pool
   Future<QueryResult> userClients({
-      String userId,
+      @required String userId,
+      @required bool computeUsersCount
       int count,
       int page,
-      bool computeUsersCount
   }) async {
     return await cli.r(QueryOptions(
         document: userClientsQuery,
@@ -459,16 +450,14 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> client({
-      String id,
-      String userId,
-      bool fromAdmin
+      @required String id,
+      @required String userId,
   }) async {
     return await cli.r(QueryOptions(
         document: clientQuery,
         variables: <String, dynamic> {
           'userId': userId,
           'id': id,
-          'fromAdmin': fromAdmin
         }
     ));
   }
@@ -486,8 +475,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> isClientBelongToUser({
-      String userId,
-      String clientId,
+      @required String userId,
+      @required String clientId,
       String pmdesc
   }) async {
     return await cli.r(QueryOptions(
@@ -512,8 +501,8 @@ GKl64GDcIq3au+aqJQIDAQAB
   }
 
   Future<QueryResult> updateUserClient({
-      String id,
-      String name,
+      @required String id,
+      @required String name,
       String userId,
       String desc,
       String allowedOrigins,
@@ -669,6 +658,110 @@ GKl64GDcIq3au+aqJQIDAQAB
           'refreshKey': refreshKey,          
           'enable': enable,
           'userPoolId': userPoolId,
+        }
+    ));
+  }
+
+  /// webhook
+  Future<QueryResult> addClientWebhook({
+      String url,
+      String client,
+      String secret,
+      String contentType,
+      @required bool enable,
+      @required List<String> events,
+  }) async {
+    return await cli.r(QueryOptions(
+        document: addClientWebhookQuery,
+        variables: <String, dynamic> {
+          'url': url,
+          'client': client,
+          'secret': secret,
+          'contentType': contentType,
+          'enable': enable,
+          'events': events
+        }
+    ));
+  }
+
+  Future<QueryResult> getAllWebhooks({
+      @required String client
+  }) async {
+    return await cli.r(QueryOptions(
+        document: getAllWebhooksQuery,
+        variables: <String, dynamic> {
+          'client': client,
+        }
+    ));
+  }
+
+  Future<QueryResult> getWebhookLogs({
+      @required String webhook
+  }) async {
+    return await cli.r(QueryOptions(
+        document: getWebhookLogsQuery,
+        variables: <String, dynamic> {
+          'webhook': webhook,
+        }
+    ));
+  }
+
+  Future<QueryResult> getWebhookLogDetail({
+      @required String id
+  }) async {
+    return await cli.r(QueryOptions(
+        document: getWebhookLogDetailQuery,
+        variables: <String, dynamic> {
+          '_id': id,
+        }
+    ));
+  }
+
+  Future<QueryResult> getWebhookSettingOptions() async {
+    return await cli.r(QueryOptions(
+        document: getWebhookSettingOptionsQuery,
+    ));
+  }
+
+  Future<QueryResult> updateClientWebhook({
+      @required String id,
+      @required String url,
+      @required List<String> events,
+      String secret,
+      @required bool enable,
+      @required String contentType
+  }) async {
+    return await cli.r(QueryOptions(
+        document: updateClientWebhookQuery,
+        variables: <String, dynamic> {
+          'id': id,
+          'url': url,
+          'events': events,
+          'secret': secret,
+          'enable': enable,
+          'contentType': contentType
+        }
+    ));
+  }
+
+  Future<QueryResult> deleteClientWebhook({
+      @required String id,
+  }) async {
+    return await cli.r(QueryOptions(
+        document: deleteClientWebhookQuery,
+        variables: <String, dynamic> {
+          'id': id,
+        }
+    ));
+  }
+
+  Future<QueryResult> sendWebhookTest({
+      @required String id,
+  }) async {
+    return await cli.r(QueryOptions(
+        document: sendWebhookTestQuery,
+        variables: <String, dynamic> {
+          'id': id,
         }
     ));
   }

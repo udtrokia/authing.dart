@@ -1,6 +1,6 @@
 part of authing;
 
-final String deleteClientWebhook = r'''
+final String deleteClientWebhookQuery = r'''
 mutation deleteClientWebhook($id: String!) {
   deleteClientWebhook(id: $id) {
     _id
